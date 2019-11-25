@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+    defaultConfig {
+        applicationId "com.neusoft.myapplication"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        manifestPlaceholders = [qqappid: "1109939412"]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk{
+            abiFilters "armeabi-v7a","x86"
+        }
+    }
+    signingConfigs{
+        release {
+            storeFile file("D://kf_tools/hbrmt/signedKey/signed.jks")        //证书存放目录
+            storePassword "111111"                               //密码
+            keyAlias "rmt"                                                //别名
+            keyPassword "111111"                                //密码(就是设置证书那两个密码，建议都填一样的)
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+}
+
+android.applicationVariants.all {
+    variant ->
+        variant.outputs.all {
+            outputFileName = "融媒体总集成.apk"
+        }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation(name:'react-native-0.57.8', ext:'aar')
+    implementation(name:'neurmt-1.1.0', ext:'aar')
+    implementation(name:'neurmt-oss', ext:'aar')
+    implementation(name: 'neurmt-imagePicker',ext: 'aar')
+    implementation(name:'neurmt-sqlite', ext:'aar')
+    implementation(name:'ccbgovpaylibrary-3.0.1', ext:'aar')
+    implementation 'com.facebook.infer.annotation:infer-annotation:0.11.2'
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.facebook.fresco:fresco:1.10.0'
+    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
+    implementation 'com.facebook.soloader:soloader:0.5.1'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.11.0'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'org.webkit:android-jsc:r174650'
+    //阿里云图片传输
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
+}
