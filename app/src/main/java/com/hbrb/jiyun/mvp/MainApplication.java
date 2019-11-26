@@ -18,7 +18,7 @@ public class MainApplication extends Application{
   @Override
   public void onCreate() {
     super.onCreate();
-    SoLoader.init(this, /* native exopackage1212212121212121212121212 */ false);
+    SoLoader.init(this, /* native exopackage222 */ false);
 
     /**
      * 注册APPID
